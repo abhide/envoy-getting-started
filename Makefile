@@ -9,7 +9,7 @@ kindly-push:
 	kind load docker-image ${IMAGE}:${IMAGE_TAG} --name=${CLUSTER}
 
 kindly-deploy:
-	kubectl create namespace ${NAMESPACE}
+	kubectl create namespace ${NAMESPACE} || true
 	kubectl apply -f k8s/envoy-deployment.yaml -n ${NAMESPACE}
 
 clean:

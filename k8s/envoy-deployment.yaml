@@ -25,7 +25,7 @@ spec:
         imagePullPolicy: IfNotPresent
         image: local-envoy:latest
         ports:
-        - containerPort: 9901
+        - containerPort: 8080
 ---
 kind: Service
 apiVersion: v1
@@ -38,6 +38,6 @@ spec:
     type: ingress
   ports:
     - protocol: TCP
-      port: 9901
+      port: 8080
       nodePort: 30000
-      targetPort: 9901
+      targetPort: 8080
