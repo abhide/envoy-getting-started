@@ -1,0 +1,42 @@
+admin:
+  access_log_path: /tmp/admin_access.log
+  address:
+    socket_address:
+      protocol: TCP
+      address: 0.0.0.0
+      port_value: 9901
+static_resources:
+  listeners:
+  - address:
+      socket_address:
+        protocol: TCP
+        address: 0.0.0.0
+        port_value: 8080
+    filter_chains:
+    - filters:
+      - name: envoy.tcp_proxy
+        typed_config: 
+          "@type": type.googleapis.com/envoy.config.filter.network.tcp_proxy.v2.TcpProxy
+          cluster: simple-httpapp
+          stat_prefix: ingress_tcp
+  clusters:
+  - name: simple-httpapp
+    connect_timeout: 1s
+    type: strict_dns
+    lb_policy: round_robin
+    load_assignment:
+      cluster_name: simple-httpapp
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+           address:
+             socket_address:
+               port_value: 8080
+               address : simple-httpapp-v1-svc.v1
+               ipv4_compat: true
+        - endpoint:
+           address:
+             socket_address:
+               port_value: 8080
+               address : simple-httpapp-v2-svc.v2
+               ipv4_compat: true

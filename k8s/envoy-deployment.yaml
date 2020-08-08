@@ -26,6 +26,13 @@ spec:
         image: local-envoy:latest
         ports:
         - containerPort: 8080
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/envoy
+      volumes:
+        - name: config-volume
+          configMap:
+            name: envoy-config
 ---
 kind: Service
 apiVersion: v1
