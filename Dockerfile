@@ -1,1 +1,2 @@
-FROM envoyproxy/envoy:v1.14.4
+FROM envoyproxy/envoy:v1.17.0
+ENV loglevel=info
