@@ -1,6 +1,7 @@
 IMAGE=local-envoy
 IMAGE_TAG=latest
 NAMESPACE=ingress
+CLUSTER=cluster01
 
 build:
 	docker build -t ${IMAGE}:${IMAGE_TAG} ./
