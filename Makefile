@@ -11,8 +11,15 @@ kindly-push:
 
 kindly-deploy:
 	kubectl create namespace ${NAMESPACE} || true
+	kubectl delete configmap envoy-config -n ${NAMESPACE}
 	kubectl create configmap envoy-config --from-file=envoy.yaml=${CONFIG_FILEPATH} -n ${NAMESPACE}
 	kubectl apply -f k8s/envoy-deployment.yaml -n ${NAMESPACE}
+
+kindly-wasm-deploy:
+	kubectl create namespace ${NAMESPACE} || true
+	kubectl delete configmap envoy-config -n ${NAMESPACE}
+	kubectl create configmap envoy-config --from-file=envoy.yaml=${CONFIG_FILEPATH} -n ${NAMESPACE}
+	kubectl apply -f k8s/envoy-wasm-deployment.yaml -n ${NAMESPACE}
 
 clean:
 	kind delete cluster --name=${CLUSTER}
