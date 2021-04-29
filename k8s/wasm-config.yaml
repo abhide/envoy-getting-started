@@ -93,3 +93,17 @@ static_resources:
                port_value: 8080
                address : simple-httpapp-v2-svc.v2
                ipv4_compat: true
+  - name: httpbin
+    connect_timeout: 10s
+    type: strict_dns
+    lb_policy: round_robin
+    load_assignment:
+      cluster_name: httpbin
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+           address:
+             socket_address:
+               port_value: 80
+               address: httpbin.org
+               ipv4_compat: true
